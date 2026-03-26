@@ -1,47 +1,42 @@
 'use client';
 
 import { useState } from 'react';
-import { TrendingUp } from 'lucide-react';
 import { TabContent } from './TabContent';
 
 export function PrometheusTab() {
-  const [url, setUrl] = useState('');
+  const [urlInputValue, setUrlInputValue] = useState('http://localhost:9090');
   const [isConnected, setIsConnected] = useState(false);
 
   const handleConnect = () => {
-    if (url) {
+    if (urlInputValue) {
       setIsConnected(true);
     }
   };
 
   const handleOpen = () => {
-    if (url) {
-      window.open(url, '_blank');
-    }
+    window.open(urlInputValue, '_blank');
   };
 
   return (
     <TabContent
       title="Prometheus"
-      icon={<TrendingUp className="w-6 h-6" />}
+      icon={null}
       color="red"
-      urlInputValue={url}
-      onUrlChange={setUrl}
+      urlInputValue={urlInputValue}
+      onUrlChange={setUrlInputValue}
       isConnected={isConnected}
       onConnect={handleConnect}
       onOpen={handleOpen}
     >
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <h3 className="font-semibold text-sm opacity-75">Time Series Data</h3>
-          <div className="h-32 rounded bg-gradient-to-br from-red-500/10 to-red-600/10 flex items-center justify-center">
-            <p className="text-sm opacity-50">Time series data will appear here</p>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 bg-gradient-to-br from-red-500/10 to-red-600/10 rounded-lg border border-red-500/20">
+            <h3 className="font-semibold text-red-400 mb-2">📈 Prometheus Metrics</h3>
+            <p className="text-sm text-gray-300">Time-series database for collecting and monitoring system metrics.</p>
           </div>
-        </div>
-        <div className="space-y-2">
-          <h3 className="font-semibold text-sm opacity-75">Target Status</h3>
-          <div className="h-32 rounded bg-gradient-to-br from-red-500/10 to-red-600/10 flex items-center justify-center">
-            <p className="text-sm opacity-50">Target information will appear here</p>
+          <div className="p-4 bg-gradient-to-br from-red-500/10 to-red-600/10 rounded-lg border border-red-500/20">
+            <h3 className="font-semibold text-red-400 mb-2">🔍 Metrics Port</h3>
+            <p className="text-sm text-gray-300">Default Port: 9090<br/>Query Language: PromQL</p>
           </div>
         </div>
       </div>

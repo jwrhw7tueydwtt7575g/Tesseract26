@@ -1,47 +1,42 @@
 'use client';
 
 import { useState } from 'react';
-import { Activity } from 'lucide-react';
 import { TabContent } from './TabContent';
 
 export function GrafanaTab() {
-  const [url, setUrl] = useState('');
+  const [urlInputValue, setUrlInputValue] = useState('http://localhost:3000');
   const [isConnected, setIsConnected] = useState(false);
 
   const handleConnect = () => {
-    if (url) {
+    if (urlInputValue) {
       setIsConnected(true);
     }
   };
 
   const handleOpen = () => {
-    if (url) {
-      window.open(url, '_blank');
-    }
+    window.open(urlInputValue, '_blank');
   };
 
   return (
     <TabContent
       title="Grafana"
-      icon={<Activity className="w-6 h-6" />}
+      icon={null}
       color="orange"
-      urlInputValue={url}
-      onUrlChange={setUrl}
+      urlInputValue={urlInputValue}
+      onUrlChange={setUrlInputValue}
       isConnected={isConnected}
       onConnect={handleConnect}
       onOpen={handleOpen}
     >
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <h3 className="font-semibold text-sm opacity-75">Dashboard Metrics</h3>
-          <div className="h-32 rounded bg-gradient-to-br from-orange-500/10 to-orange-600/10 flex items-center justify-center">
-            <p className="text-sm opacity-50">Metrics will appear here when connected</p>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 bg-gradient-to-br from-orange-500/10 to-orange-600/10 rounded-lg border border-orange-500/20">
+            <h3 className="font-semibold text-orange-400 mb-2">📊 Grafana Dashboard</h3>
+            <p className="text-sm text-gray-300">Connected to infrastructure metrics and visualization platform.</p>
           </div>
-        </div>
-        <div className="space-y-2">
-          <h3 className="font-semibold text-sm opacity-75">Active Alerts</h3>
-          <div className="h-32 rounded bg-gradient-to-br from-orange-500/10 to-orange-600/10 flex items-center justify-center">
-            <p className="text-sm opacity-50">Alerts will appear here when connected</p>
+          <div className="p-4 bg-gradient-to-br from-orange-500/10 to-orange-600/10 rounded-lg border border-orange-500/20">
+            <h3 className="font-semibold text-orange-400 mb-2">🎯 Default Credentials</h3>
+            <p className="text-sm text-gray-300">Username: admin<br/>Password: admin</p>
           </div>
         </div>
       </div>

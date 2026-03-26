@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-generator-config
+  namespace: default
+data:
+  log_generator.py: |
+    #!/usr/bin/env python3
+    """
+    Synthetic log generator for Kubernetes monitoring.
+    Generates various types of logs to simulate application behavior.
+    """
+
+    import time
+    import random
+    import logging
+    from datetime import datetime
+    from typing import List
+
+    # Configure logging to output to stdout
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    logger = logging.getLogger(__name__)
+
+    # Sample log messages to simulate different scenarios
+    INFO_MESSAGES = [
+        "Application started successfully",
+        "Database connection established",
+        "Cache initialized",
+        "User logged in successfully",
+        "API request processed",
+        "Configuration loaded",
+        "Service health check passed",
+        "Background job completed",
+        "Data synchronization completed",
+        "New user registration processed",
+    ]
+
+    WARNING_MESSAGES = [
+        "High memory usage detected: 85%",
+        "Response time exceeds threshold: 2.5s",
+        "Cache hit ratio below expected: 60%",
+        "Database connection pool exhausted",
+        "Rate limit approaching",
+        "Disk usage at 80%",
+        "Unusual request pattern detected",
+        "Authentication retry required",
+        "SSL certificate expiring soon",
+        "Background job running slower than usual",
+    ]
+
+    ERROR_MESSAGES = [
+        "Database connection failed",
+        "API request timeout",
+        "Invalid configuration parameter",
+        "File not found",
+        "Permission denied",
+        "Service unavailable",
+        "Memory allocation failed",
+        "Network unreachable",
+        "Authentication failed",
+        "Resource quota exceeded",
+    ]
+
+    EXCEPTION_MESSAGES = [
+        "NullPointerException in module X",
+        "IndexOutOfBoundsException: Array access error",
+        "TimeoutException: Operation exceeded timeout",
+        "ConnectionRefusedException: Unable to connect to database",
+        "IOException: Failed to read file",
+        "RuntimeException: Unexpected error occurred",
+        "OutOfMemoryException: Heap space exhausted",
+        "SocketException: Connection reset by peer",
+        "ParseException: Invalid JSON format",
+        "ExecutionException: Task failed to execute",
+    ]
+
+
+    def generate_logs(interval=2, duration=None):
+        """
+        Generate synthetic logs at regular intervals.
+        """
+        start_time = time.time()
+
+        try:
+            logger.info("Log generator started")
+            logger.info(f"Generating logs every {interval} seconds")
+
+            while True:
+                # Check if duration limit reached
+                if duration and (time.time() - start_time) > duration:
+                    logger.info("Duration limit reached, stopping log generation")
+                    break
+
+                # Generate random log level
+                log_level = random.choices(
+                    ['INFO', 'WARNING', 'ERROR', 'EXCEPTION'],
+                    weights=[50, 30, 15, 5],
+                    k=1
+                )[0]
+
+                # Select appropriate message
+                if log_level == 'INFO':
+                    message = random.choice(INFO_MESSAGES)
+                    logger.info(message)
+                elif log_level == 'WARNING':
+                    message = random.choice(WARNING_MESSAGES)
+                    logger.warning(message)
+                elif log_level == 'ERROR':
+                    message = random.choice(ERROR_MESSAGES)
+                    logger.error(message)
+                elif log_level == 'EXCEPTION':
+                    message = random.choice(EXCEPTION_MESSAGES)
+                    logger.error(f"Exception: {message}")
+
+                # Sleep before next log entry
+                time.sleep(interval)
+
+        except KeyboardInterrupt:
+            logger.info("Log generator interrupted by user")
+        except Exception as e:
+            logger.error(f"Unexpected error in log generator: {e}")
+        finally:
+            logger.info("Log generator stopped")
+
+
+    if __name__ == "__main__":
+        # Generate logs indefinitely, with 2-second intervals
+        generate_logs(interval=2)

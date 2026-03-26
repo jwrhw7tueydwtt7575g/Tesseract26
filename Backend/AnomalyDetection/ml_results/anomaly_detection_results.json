@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-03-26T21:04:39.535924",
+  "mlflow_run_id": "no_mlflow",
+  "model_type": "IsolationForest",
+  "parameters": {
+    "contamination": 0.1,
+    "random_state": 42,
+    "n_estimators": 100,
+    "max_samples": "auto",
+    "max_features": 1.0,
+    "bootstrap": false
+  },
+  "dataset": {
+    "n_chunks": 6,
+    "n_features": 15,
+    "features": [
+      "avg_latency",
+      "max_latency",
+      "std_latency",
+      "avg_db_query_time",
+      "max_db_query_time",
+      "avg_cpu_usage",
+      "max_cpu_usage",
+      "avg_memory_usage",
+      "max_memory_usage",
+      "avg_gc_time",
+      "avg_queue_depth",
+      "max_queue_depth",
+      "avg_request_rate",
+      "timeout_events",
+      "avg_error_rate"
+    ]
+  },
+  "results": {
+    "n_samples": 6,
+    "n_anomalies": 1,
+    "n_normal": 5,
+    "anomaly_percentage": 16.666666666666664
+  },
+  "anomalies": [
+    {
+      "chunk_id": "chunk_20260326_153409_225437",
+      "timestamp": "2026-03-26 15:34:09.225000",
+      "anomaly_score": -0.5780843651150896,
+      "metrics": {
+        "avg_latency": 9261.0,
+        "max_latency": 9261.0,
+        "avg_cpu_usage": 0.0,
+        "max_cpu_usage": 0.0,
+        "avg_memory_usage": 0.0,
+        "max_memory_usage": 0.0,
+        "avg_queue_depth": 0.0,
+        "max_queue_depth": 0.0,
+        "timeout_events": 0,
+        "health_count": 0,
+        "anomaly_count": 0,
+        "service_count": 0,
+        "security_count": 0
+      }
+    }
+  ]
+}
